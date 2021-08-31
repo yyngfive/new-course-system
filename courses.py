@@ -29,12 +29,10 @@ class Courses:
     # 登录
     def login(self) -> bool:
         self.get_vcode()
-
         login_name = self.username
         login_pwd = self.DES()
         vcode = self.vcode
         vtoken = self.vtoken
-
         payload = {
             'loginName':login_name,
             'loginPwd':login_pwd,
@@ -55,7 +53,6 @@ class Courses:
     # 获取学生信息
     def get_student_info(self) -> dict:
         url = self.base_url + '/sys/xsxkapp/student/' + self.username + '.do'
-
         payload = {
             'token':self.login_token,
             'language':'zh_cn'
@@ -112,13 +109,3 @@ class Courses:
         vcode = ocr.classification(res.content)
         self.vcode = vcode
         return vcode
-        
-# 简单测试一下
-if __name__ == '__main__':
-    my_courses = Courses(username='xxx',password='xxx')
-    my_courses.login()
-    my_courses.get_student_info()
-    my_courses.get_courses()
-    for course in my_courses.courses:
-        name = course['courseName']
-        print(name)
